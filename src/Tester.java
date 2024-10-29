@@ -136,7 +136,7 @@ public class Tester implements ActionListener {
                 }
                     if (e.getSource() == equButton) {
                         try {
-                            textfield.setText((String.valueOf(calculator.evaluate(textfield.getText()))));
+                            textfield.setText((String.valueOf(BackEndCalculator.evaluate(textfield.getText()))));
                         } catch (emptySTackException ex) {
                             textfield.setText("");
                             throw new RuntimeException(ex);
