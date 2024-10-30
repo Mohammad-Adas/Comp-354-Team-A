@@ -89,8 +89,13 @@ public class Tester implements ActionListener {
         frame.add(textfield);
         frame.setVisible(true);
     }
-    public static void main(String[] args) throws emptySTackException {
-        Tester tester = new Tester();
+    public static void main(String[] args) {
+        try {
+                    Tester tester = new Tester();
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
     }
 
@@ -137,7 +142,7 @@ public class Tester implements ActionListener {
                     if (e.getSource() == equButton) {
                         try {
                             textfield.setText((String.valueOf(BackEndCalculator.evaluate(textfield.getText()))));
-                        } catch (emptySTackException ex) {
+                        } catch (Exception ex) {
                             textfield.setText("");
                             throw new RuntimeException(ex);
                         }

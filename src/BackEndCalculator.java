@@ -5,14 +5,14 @@ public class BackEndCalculator {
     static StackOperators stackOperators = new StackOperators();
     static String expression;
 
-    public static void main(String[] args) throws emptySTackException {
+    public static void main(String[] args)  {
         Scanner scanner = new Scanner(System.in);
         expression = scanner.nextLine();
 
         System.out.println(evaluate(expression));
     }
 
-    public static void processOperator(char c) throws emptySTackException {
+    public static void processOperator(char c)  {
         // Convert character to operator and handle precedence
         switch (c) {
             case '+':
@@ -56,7 +56,7 @@ public class BackEndCalculator {
         }
     }
 
-    public static float evaluate(String expr) throws emptySTackException {
+    public static float evaluate(String expr)  {
         // Reset stacks for each new expression evaluation
         stackFloat = new StackFloat();
         stackOperators = new StackOperators();
@@ -70,8 +70,12 @@ public class BackEndCalculator {
                 if (numberBuffer.length() != 0) {
                     stackFloat.push(Float.parseFloat(numberBuffer.toString())); // Parse as float
                     numberBuffer = new StringBuilder();
+                } try {
+                                    processOperator(c);
+
+                } catch (Exception e) {
+                    // TODO: handle exception
                 }
-                processOperator(c);
             }
         }
         if (numberBuffer.length() != 0) {
@@ -80,20 +84,24 @@ public class BackEndCalculator {
 
         // Final evaluation of the remaining operations
         while (!stackOperators.isEmpty()) {
-            doOperation();
+            try {
+                            doOperation();
+
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
         }
 
         return stackFloat.pop();
     }
 
-    public static void doOperation() throws emptySTackException {
+    public static void doOperation()  {
         if (stackOperators.isEmpty()) {
             return;
         }
 
         Operators op = stackOperators.pop();
         if (op instanceof OpenParenthesis) {
-            throw new emptySTackException();
         }
 
         float result = 0;
@@ -142,9 +150,8 @@ class StackFloat {
         return a[top--];
     }
 
-    public float top() throws emptySTackException {
+    public float top()  {
         if (isEmpty()) {
-            throw new emptySTackException();
         }
         return a[top];
     }
@@ -176,9 +183,8 @@ class StackOperators {
         return a[top--];
     }
 
-    public Operators top() throws emptySTackException {
+    public Operators top()  {
         if (isEmpty()) {
-            throw new emptySTackException();
         }
         return a[top];
     }
