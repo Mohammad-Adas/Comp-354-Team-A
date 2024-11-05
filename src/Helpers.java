@@ -22,9 +22,22 @@ public class Helpers {
 
 
     /*
-    Exponential Function function
+    Natural Exponential function
      */
-
+    public static double naturalExponential(double x){
+        // using the Taylor series to approximate the power function
+        double result = 1;
+        double term = 1;
+        int n = 30; // calculating first 30 terms.. this could be changed to use some 'convergence precision' value instead..
+    
+        for (int i = 1; i <= n; i++) {
+            term *= x / i;
+            result += term;
+        }
+    
+        return result;
+    }
+    
     /*
     Natural Logarithm function
      */
