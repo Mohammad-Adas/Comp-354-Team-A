@@ -19,7 +19,23 @@ public class Helpers {
     /*
     Absolute Value function
      */
+    //the absolute value of an int
+    public static int absoluteValue(int x) {
+        if (x < 0) {
+            return -x;  // Negate x if it's negative
+        } else {
+            return x;   // Return x if it's already positive or zero
+        }
+    }
 
+    //the absolute value of a double
+    public static double absoluteValue(double x) {
+        if (x < 0) {
+            return -x;  // Negate x if it's negative
+        } else {
+            return x;   // Return x if it's already positive or zero
+        }
+    }
 
     /*
     Natural Exponential function
