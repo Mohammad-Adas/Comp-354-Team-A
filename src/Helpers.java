@@ -62,6 +62,24 @@ public class Helpers {
     Square Root function
      */
 
+	    public static double calculateSquareRoot(double number) {
+	        if (number < 0) {
+	            throw new IllegalArgumentException("Cannot calculate square root of a negative number");
+	        }
+
+	        double guess = number / 2.0;
+	        if (number == 0) return 0;
+
+	     
+	        double epsilon = 0.000001;
+
+	        // Babylonian method (Newton's method for square roots)
+	        while ((guess * guess - number) > epsilon || (number - guess * guess) > epsilon) {
+	            guess = (guess + number / guess) / 2.0;
+	        }
+
+	        return guess;
+	    }
     /*
     Trigonometric Functions
      */
