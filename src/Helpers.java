@@ -1,4 +1,4 @@
-public class Helpers {
+spublic class Helpers {
 
     /*
     Please add your helpers functions here.
@@ -57,6 +57,9 @@ public class Helpers {
     /*
     Natural Logarithm function
      */
+    public static double ln(double x){
+        return Math.log(x);
+    }
 
     /*
     Square Root function
