@@ -5,9 +5,9 @@ public class Tester implements ActionListener {
     JFrame frame;
     JTextField textfield;
     JButton[] numberButtons = new JButton [10];
-    JButton[] functionButtons = new JButton[11];
+    JButton[] functionButtons = new JButton[20];
     JButton addButton, subButton, mulButton, divButton;
-    JButton decButton, equButton, delButton, clrButton ,openParaButton,closeParaButton, powerButton;
+    JButton decButton, equButton, delButton, clrButton ,openParaButton,closeParaButton, powerButton , factorialButton;
     JPanel panel;
     char operator;
     Font myFont = new Font("Ink Free", Font.BOLD, 30);
@@ -43,6 +43,8 @@ public class Tester implements ActionListener {
         functionButtons[8] = openParaButton;
         functionButtons[9] = closeParaButton;
         functionButtons[10] = powerButton;
+        functionButtons[11] = factorialButton;
+
 
 
         for (int i =0;i<11;i++) {
@@ -80,6 +82,9 @@ public class Tester implements ActionListener {
         panel. add (equButton) ;
         panel. add (divButton);
         panel.add(powerButton);
+        panel.add(powerButton);
+
+
         panel.add(openParaButton);
         panel.add(closeParaButton);
 //        panel. setBackground (Color .GRAY) ;
