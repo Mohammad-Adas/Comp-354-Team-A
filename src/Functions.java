@@ -55,4 +55,22 @@ public class Functions {
         // Number[] dataset2 = {1.5, 2.5, 3.5, 4.5};    // All doubles
         // Number[] dataset3 = {1, 2.5, 3, 4.5};        // Mixed integers and doubles
     }
+    /* Power function */
+public static double calculatePower(double number, int power) {
+    double outcome = 1;
+    int absPower = power < 0 ? -power : power; // Absolute value of power
+
+    // Multiply number by itself absPower times
+    for (int i = 0; i < absPower; i++) {
+        outcome *= number;
+    }
+
+    // If power was negative, take the reciprocal of the outcome
+    if (power < 0) {
+        outcome = 1 / outcome;
+    }
+
+    return outcome;
+}
+
 }
