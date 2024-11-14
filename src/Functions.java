@@ -97,7 +97,7 @@ public static double calculatePower(double number, int power) {
             }
             double t = z + p.length - 0.5;
             // Using Helpers.sqrt, Helpers.power, and Helpers.naturalExponential directly
-            return Helpers.calculatesquareroot(2 * pi()) * Helpers.power(t, z + 0.5) * Helpers.naturalExponential(-t) * x;
+            return Helpers.calculateSquareRoot(2 * pi()) * Helpers.power(t, z + 0.5) * Helpers.naturalExponential(-t) * x;
         }
     }
     
