@@ -80,7 +80,25 @@ public class Helpers {
     Natural Logarithm function
      */
     public static double ln(double x){
-        return Math.log(x);
+           if (x <= 0){
+            throw new ArithmeticException();
+        }
+        double a = 1;
+        double n = 50;
+        double deltaX = x-a/n;
+        double result = 1;
+        double beginig = 1;
+        double last = 1/50;
+        for (double i = 1; i <= n; i++) {
+            if (i%2==0){
+                result += 4*(1/i+1);
+            }else{
+                result += 2*(1/i+1);
+
+            }
+        }
+        return result;
+
     }
 
     /*
