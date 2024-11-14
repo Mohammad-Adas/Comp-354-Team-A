@@ -30,4 +30,29 @@ public class Functions {
 
         return sum;
     }
+
+    /* Mean Absolute Deviation (MAD) */
+    public static double calculateMAD(Number[] dataset) {
+        double sum = 0.0;
+        for (Number num : dataset) {
+            sum += num.doubleValue();  // Convert Number to double
+        }
+
+        // Calculate mean
+        double mean = sum / dataset.length;
+
+        // Calculate the sum of absolute differences from the mean
+        double madSum = 0.0;
+        for (Number num : dataset) {
+            madSum += Helpers.absoluteValue(num.doubleValue() - mean);
+        }
+
+        // Return the Mean Absolute Deviation (MAD)
+        return madSum / dataset.length;
+
+        // Test cases for different data types (integers, doubles, mixed)
+        // Number[] dataset1 = {1, 2, 3, 4, 5};          // All integers
+        // Number[] dataset2 = {1.5, 2.5, 3.5, 4.5};    // All doubles
+        // Number[] dataset3 = {1, 2.5, 3, 4.5};        // Mixed integers and doubles
+    }
 }
