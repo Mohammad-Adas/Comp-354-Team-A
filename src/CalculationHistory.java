@@ -3,10 +3,12 @@ import java.util.ArrayList;
 public class CalculationHistory {
     // Private array of strings to store the history
     private ArrayList<String> history;
+     private Map<String , Integer> countFunctions ;
 
     // Constructor to initialize the history
     public CalculationHistory() {
         history = new ArrayList<>();
+        countFunctions = new HashMap<>();
     }
 
     // Adds a string to the history
@@ -28,6 +30,15 @@ public class CalculationHistory {
     public String[] clearHistory() {
         history.clear();
         return new String[0];
+    }
+
+    //ChatGPT
+    //https://stackoverflow.com/questions/109383/sort-a-mapkey-value-by-values
+    public String getMostFrequent(){
+        List<Map.Entry<String, Integer>> temp = new ArrayList<>(countFunctions.entrySet());
+        temp.sort(Map.Entry.comparingByValue());
+        return temp.get(0).getKey();
+
     }
 
     // Test the CalculationHistory class
