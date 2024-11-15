@@ -55,6 +55,23 @@ public class Functions {
         // Number[] dataset2 = {1.5, 2.5, 3.5, 4.5};    // All doubles
         // Number[] dataset3 = {1, 2.5, 3, 4.5};        // Mixed integers and doubles
     }
+
+    //ab^x functions
+        public static double abx(double a , double b , double x) {
+        if((b<0)&&(x>0&&x<1)) {
+            throw new IllegalArgumentException("Cannot sqrt a negative number");
+        }else if (((b)==0)&(x<0)){
+           throw new IllegalArgumentException("Cannot divide by zero");
+        }else if ((b==0)&&(x==0))
+        {
+            throw new IllegalArgumentException("Undefined");
+        }else{
+            double result = Helpers.power(b,x);
+            return result * a;
+        }
+    }
+
+
     /* Power function */
 public static double calculatePower(double number, int power) {
     double outcome = 1;
