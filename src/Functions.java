@@ -31,6 +31,20 @@ public class Functions {
         return sum;
     }
 
+    public static double abx(double a , double b , double x) {
+        if((b<0)&&(x>0&&x<1)) {
+            throw new IllegalArgumentException("Cannot sqrt a negative number");
+        }else if (((b)==0)&(x<0)){
+           throw new IllegalArgumentException("Cannot divide by zero");
+        }else if ((b==0)&&(x==0)){
+            throw new IllegalArgumentException("Undefined");
+        }else{
+            double result = Helpers.power(b,(int)x);
+            return result * a;
+        }
+    }
+
+    
     /* Mean Absolute Deviation (MAD) */
     public static double calculateMAD(Number[] dataset) {
         double sum = 0.0;
