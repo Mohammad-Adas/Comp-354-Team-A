@@ -1,112 +1,84 @@
 import java.util.Scanner;
 
 public class BackEndCalculator {
-    static StackFloat stackFloat = new StackFloat();
+    static Stackdouble stackdouble = new Stackdouble();
     static StackOperators stackOperators = new StackOperators();
     static String expression;
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         expression = scanner.nextLine();
 
         System.out.println(evaluate(expression));
     }
 
-    public static void processOperator(char c)  {
-        // Convert character to operator and handle precedence
-        switch (c) {
-            case '+':
-            case '-':
-                while (!stackOperators.isEmpty() && !(stackOperators.top() instanceof OpenParenthesis)) {
-                    // + and - have lower precedence than *, /, and ^, but equal among themselves
+    public static void processOperator(String func) {
+        switch (func) {
+            case "+":
+            case "-":
+                while (!stackOperators.isEmpty() && stackOperators.top().getRank() <= 5) {
                     doOperation();
                 }
-                if (c == '+') {
-                    stackOperators.push(new Addition());
-                } else {
-                    stackOperators.push(new Subtraction());
-                }
+                stackOperators.push(func.equals("+") ? new Addition() : new Subtraction());
                 break;
-            case '*':
-            case '/':
-                while (!stackOperators.isEmpty() && (stackOperators.top() instanceof Multiplication || stackOperators.top() instanceof Division || stackOperators.top() instanceof Power)) {
-                    // * and / have higher precedence than + and -, but lower than ^
+            case "*":
+            case "/":
+                while (!stackOperators.isEmpty() && stackOperators.top().getRank() <= 4) {
                     doOperation();
                 }
-                if (c == '*') {
-                    stackOperators.push(new Multiplication());
-                } else {
-                    stackOperators.push(new Division());
-                }
+                stackOperators.push(func.equals("*") ? new Multiplication() : new Division());
                 break;
-            case '^':
-                // ^ has the highest precedence
+            case "^":
+                while (!stackOperators.isEmpty() && stackOperators.top().getRank() <= 2) {
+                    doOperation();
+                }
                 stackOperators.push(new Power());
                 break;
-            case '(':
+            case "(":
                 stackOperators.push(new OpenParenthesis());
                 break;
-            case ')':
-                // Pop and evaluate until finding the matching '('
+            case ")":
                 while (!(stackOperators.top() instanceof OpenParenthesis)) {
                     doOperation();
                 }
-                stackOperators.pop(); // Pop the open parenthesis without evaluating it
+                stackOperators.pop();
                 break;
+            case "arccos":
+                stackOperators.push(new Arccos());
+                break;
+            case "abx":
+                stackOperators.push(new Abx());
+                break;
+            case "mad":
+                stackOperators.push(new Mad());
+                break;
+            case "gamma":
+                stackOperators.push(new Gamma());
+                break;
+            case "exp":
+                stackOperators.push(new Exp());
+                break;
+            case "sinh":
+                stackOperators.push(new Sinh());
+                break;
+            case "√":
+                stackOperators.push(new Sqrt());
+                break;
+            case "!":
+                stackOperators.push(new Factorial());
+                break;
+            default:
+                System.out.println("Unsupported operator: " + func);
         }
     }
 
-    public static float evaluate(String expr)  {
-        // Reset stacks for each new expression evaluation
-        stackFloat = new StackFloat();
-        stackOperators = new StackOperators();
-
-        StringBuilder numberBuffer = new StringBuilder();
-        for (int i = 0; i < expr.length(); i++) {
-            char c = expr.charAt(i);
-            if (Character.isDigit(c) || c == '.') { // Support decimal point
-                numberBuffer.append(c);
-            } else {
-                if (numberBuffer.length() != 0) {
-                    stackFloat.push(Float.parseFloat(numberBuffer.toString())); // Parse as float
-                    numberBuffer = new StringBuilder();
-                } try {
-                                    processOperator(c);
-
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-            }
-        }
-        if (numberBuffer.length() != 0) {
-            stackFloat.push(Float.parseFloat(numberBuffer.toString()));
-        }
-
-        // Final evaluation of the remaining operations
-        while (!stackOperators.isEmpty()) {
-            try {
-                            doOperation();
-
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
-        }
-
-        return stackFloat.pop();
-    }
-
-    public static void doOperation()  {
-        if (stackOperators.isEmpty()) {
-            return;
-        }
+    public static void doOperation() {
+        if (stackOperators.isEmpty()) return;
 
         Operators op = stackOperators.pop();
-        if (op instanceof OpenParenthesis) {
-        }
-
-        float result = 0;
-        float y = stackFloat.pop();
-        float x = !stackFloat.isEmpty() ? stackFloat.pop() : 0;
+        double result = 0;
+        double y = stackdouble.pop();
+        double x = (!stackdouble.isEmpty() && !(op instanceof UnaryOperator)) ? stackdouble.pop() : 0;
 
         if (op instanceof Addition) {
             result = x + y;
@@ -117,27 +89,90 @@ public class BackEndCalculator {
         } else if (op instanceof Division) {
             result = x / y;
         } else if (op instanceof Power) {
-            result = (float) Math.pow(x, y);
+            result = Functions.calculatePower(x, (int) y);
+        } else if (op instanceof Arccos) {
+            result = Functions.arccos(y, true);
+        } else if (op instanceof Abx) {
+            result = Functions.abx(x, y, stackdouble.pop());
+        } else if (op instanceof Mad) {
+            Number[] dataset = retrieveDataset();
+            result = Functions.calculateMAD(dataset);
+        } else if (op instanceof Gamma) {
+            {
+                result = Functions.gammaDouble(y);
+            }
+        } else if (op instanceof Exp) {
+            result = Helpers.naturalExponential(y); // Natural exponential
+        } else if (op instanceof Sinh) {
+            result = Functions.calculateSinh(y);
+        } else if (op instanceof Sqrt) {
+            result = Helpers.calculateSquareRoot(y); // Square root
+        } else if (op instanceof Factorial) {
+            result = Helpers.factorial((int) y); // Factorial
         }
 
-        stackFloat.push(result);
+        stackdouble.push(result);
+    }
+
+    public static double evaluate(String expr) {
+        stackdouble = new Stackdouble();
+        stackOperators = new StackOperators();
+
+        StringBuilder numberBuffer = new StringBuilder();
+        StringBuilder functionBuffer = new StringBuilder();
+
+        for (int i = 0; i < expr.length(); i++) {
+            char c = expr.charAt(i);
+
+            if (Character.isDigit(c) || c == '.') {
+                numberBuffer.append(c);
+            } else if (Character.isLetter(c) || c == '√' || c == '!') {
+                functionBuffer.append(c);
+            } else {
+                if (numberBuffer.length() != 0) {
+                    stackdouble.push(Double.parseDouble(numberBuffer.toString()));
+                    numberBuffer = new StringBuilder();
+                }
+                if (functionBuffer.length() != 0) {
+                    processOperator(functionBuffer.toString());
+                    functionBuffer = new StringBuilder();
+                }
+                processOperator(String.valueOf(c));
+            }
+        }
+        if (numberBuffer.length() != 0) {
+            stackdouble.push(Double.parseDouble(numberBuffer.toString()));
+        }
+        if (functionBuffer.length() != 0) {
+            processOperator(functionBuffer.toString());
+        }
+
+        while (!stackOperators.isEmpty()) {
+            doOperation();
+        }
+
+        return stackdouble.pop();
+    }
+
+    private static Number[] retrieveDataset() {
+        // For demonstration, create a dummy dataset.
+        // This should convert stackdouble content into a dataset for the MAD function.
+        return new Number[] { 1, 2, 3, 4, 5 }; // Replace with logic to read from stackdouble
     }
 }
 
-// Stack class to store float values
-class StackFloat {
-    protected float[] a = new float[2];
+// Stack Classes
+class Stackdouble {
+    protected double[] a = new double[2];
     private int top = -1;
 
-    public void push(float x) {
-        if (top == a.length - 1) {
-            growsize();
-        }
+    public void push(double x) {
+        if (top == a.length - 1) growsize();
         a[++top] = x;
     }
 
     private void growsize() {
-        float[] b = new float[a.length * 2];
+        double[] b = new double[a.length * 2];
         System.arraycopy(a, 0, b, 0, a.length);
         a = b;
     }
@@ -146,26 +181,21 @@ class StackFloat {
         return top == -1;
     }
 
-    public float pop() {
+    public double pop() {
         return a[top--];
     }
 
-    public float top()  {
-        if (isEmpty()) {
-        }
+    public double top() {
         return a[top];
     }
 }
 
-// Stack for operators with dynamic resizing
 class StackOperators {
     protected Operators[] a = new Operators[2];
     private int top = -1;
 
     public void push(Operators x) {
-        if (top == a.length - 1) {
-            growsize();
-        }
+        if (top == a.length - 1) growsize();
         a[++top] = x;
     }
 
@@ -183,21 +213,104 @@ class StackOperators {
         return a[top--];
     }
 
-    public Operators top()  {
-        if (isEmpty()) {
-        }
+    public Operators top() {
         return a[top];
     }
 }
 
-// Operator classes for each arithmetic operation
-abstract class Operators { protected int rank = 10; }
-class Addition extends Operators { public Addition() { rank = 4; } }
-class Subtraction extends Operators { public Subtraction() { rank = 4; } }
-class Multiplication extends Operators { public Multiplication() { rank = 3; } }
-class Division extends Operators { public Division() { rank = 3; } }
-class Power extends Operators { public Power() { rank = 2; } }
-class OpenParenthesis extends Operators { public OpenParenthesis() { rank = 10; } }
+// Operators Classes
+abstract class Operators {
+    protected int rank;
 
-// Custom exception for handling empty stack scenarios
+    public int getRank() {
+        return rank;
+    }
+}
 
+// Binary Operators
+class Addition extends Operators {
+    public Addition() {
+        rank = 5;
+    }
+}
+
+class Subtraction extends Operators {
+    public Subtraction() {
+        rank = 5;
+    }
+}
+
+class Multiplication extends Operators {
+    public Multiplication() {
+        rank = 4;
+    }
+}
+
+class Division extends Operators {
+    public Division() {
+        rank = 4;
+    }
+}
+
+class Power extends Operators {
+    public Power() {
+        rank = 2;
+    }
+}
+
+class OpenParenthesis extends Operators {
+    public OpenParenthesis() {
+        rank = 10;
+    }
+}
+
+// Unary Operators
+abstract class UnaryOperator extends Operators { }
+
+class Arccos extends UnaryOperator {
+    public Arccos() {
+        rank = 3;
+    }
+}
+
+class Abx extends Operators {
+    public Abx() {
+        rank = 4;
+    }
+}
+
+class Mad extends UnaryOperator {
+    public Mad() {
+        rank = 3;
+    }
+}
+
+class Gamma extends UnaryOperator {
+    public Gamma() {
+        rank = 3;
+    }
+}
+
+class Exp extends UnaryOperator {
+    public Exp() {
+        rank = 3;
+    }
+}
+
+class Sinh extends UnaryOperator {
+    public Sinh() {
+        rank = 3;
+    }
+}
+
+class Sqrt extends UnaryOperator {
+    public Sqrt() {
+        rank = 3;
+    }
+}
+
+class Factorial extends UnaryOperator {
+    public Factorial() {
+        rank = 3;
+    }
+}

@@ -45,7 +45,7 @@ public class Functions {
         }
     }
 
-    
+
     /* Mean Absolute Deviation (MAD) */
     public static double calculateMAD(Number[] dataset) {
         double sum = 0.0;
@@ -70,7 +70,7 @@ public class Functions {
         // Number[] dataset2 = {1.5, 2.5, 3.5, 4.5};    // All doubles
         // Number[] dataset3 = {1, 2.5, 3, 4.5};        // Mixed integers and doubles
     }
-    
+
     /* Power function */
 public static double calculatePower(double number, int power) {
     double outcome = 1;
@@ -90,12 +90,7 @@ public static double calculatePower(double number, int power) {
 }
     /* Gamma Function */
     // Gamma function for integer inputs
-      public static int gammaInt(int n) {
-        if (n <= 0) {
-            throw new IllegalArgumentException("Gamma function is not defined for non-positive integers.");
-        }
-        return Helpers.factorial(n-1);
-    }
+
       public static double gammaDouble(double z) {
         if (z < 0.5) {
             // Using Helpers.sin and Helpers.pi directly
@@ -116,12 +111,20 @@ public static double calculatePower(double number, int power) {
             return Helpers.calculateSquareRoot(2 * pi()) * Helpers.power(t, z + 0.5) * Helpers.naturalExponential(-t) * x;
         }
     }
-    
+
     // Method to return the value of Pi
     public static double pi() {
         return 3.141592653589793;
     }
-    
+
+    // Hyperbolic sine function using exponential logic
+    public static double calculateSinh(double x) {
+        // sinh(x) = (e^x - e^(-x)) / 2
+        double expX = Helpers.naturalExponential(x); // e^x
+        double expNegX = Helpers.naturalExponential(-x); // e^(-x)
+        return (expX - expNegX) / 2;
+    }
+
 
 
 }

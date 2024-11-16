@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.*;
 
 public class CalculationHistory {
     // Private array of strings to store the history

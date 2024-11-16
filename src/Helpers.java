@@ -14,19 +14,10 @@ public class Helpers {
             return n*factorial(n-1);
         }
     }
-    public static double factoriall(int n) {
-        if (n == 0 || n == 1) {
-            return 1;
-        }
-        double result = 1;
-        for (int i = 2; i <= n; i++) {
-            result *= i;
-        }
-        return result;
-    }
+
 
     /* power function */
-    public static double power(double base, int exponent) {
+    public static double power(double base, double exponent) {
         double result = 1;
         for (int i = 0; i < Math.abs(exponent); i++) {
             result *= base;
