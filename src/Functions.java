@@ -3,7 +3,7 @@ public class Functions {
     /* Please add your main functions here */
 
     /* arccos(x) function */
-    public static double arccos(double x, boolean isRadian) {
+    public static double arccos(double x) {
         // Ensure input is within valid range for arccos
         if (x < -1 || x > 1) {
             throw new IllegalArgumentException("Input must be between -1 and 1");
@@ -24,9 +24,9 @@ public class Functions {
         }
 
         // Convert result to degrees if isRadian is false
-        if (!isRadian) {
-            sum = Math.toDegrees(sum);
-        }
+//        if (!isRadian) {
+//            sum = Math.toDegrees(sum);
+//        }
 
         return sum;
     }

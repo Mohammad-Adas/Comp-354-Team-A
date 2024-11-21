@@ -43,17 +43,17 @@ public class BackEndCalculator {
                 }
                 stackOperators.pop();
                 break;
-            case "arccos":
-                stackOperators.push(new Arccos());
+            case "sin":
+                stackOperators.push(new Sin());
                 break;
-            case "abx":
-                stackOperators.push(new Abx());
+            case "cos":
+                stackOperators.push(new Cos());
                 break;
-            case "mad":
-                stackOperators.push(new Mad());
+            case "tan":
+                stackOperators.push(new Tan());
                 break;
-            case "gamma":
-                stackOperators.push(new Gamma());
+            case "ln":
+                stackOperators.push(new Ln());
                 break;
             case "exp":
                 stackOperators.push(new Exp());
@@ -66,6 +66,18 @@ public class BackEndCalculator {
                 break;
             case "!":
                 stackOperators.push(new Factorial());
+                break;
+            case "arccos":
+                stackOperators.push(new Arccos());
+                break;
+            case "abx":
+                stackOperators.push(new Abx());
+                break;
+            case "mad":
+                stackOperators.push(new Mad());
+                break;
+            case "gamma":
+                stackOperators.push(new Gamma());
                 break;
             default:
                 System.out.println("Unsupported operator: " + func);
@@ -90,25 +102,31 @@ public class BackEndCalculator {
             result = x / y;
         } else if (op instanceof Power) {
             result = Functions.calculatePower(x, (int) y);
+        } else if (op instanceof Sin) {
+            result = Helpers.sin(y);
+        } else if (op instanceof Cos) {
+            result = Helpers.cos(y);
+        } else if (op instanceof Tan) {
+            result = Helpers.tan(y);
+        } else if (op instanceof Ln) {
+            result = Helpers.ln(y);
+        } else if (op instanceof Exp) {
+            result = Helpers.naturalExponential(y);
+        } else if (op instanceof Sinh) {
+            result = Functions.calculateSinh(y);
         } else if (op instanceof Arccos) {
-            result = Functions.arccos(y, true);
+            result = Functions.arccos(y);
         } else if (op instanceof Abx) {
             result = Functions.abx(x, y, stackdouble.pop());
         } else if (op instanceof Mad) {
             Number[] dataset = retrieveDataset();
             result = Functions.calculateMAD(dataset);
         } else if (op instanceof Gamma) {
-            {
-                result = Functions.gammaDouble(y);
-            }
-        } else if (op instanceof Exp) {
-            result = Helpers.naturalExponential(y); // Natural exponential
-        } else if (op instanceof Sinh) {
-            result = Functions.calculateSinh(y);
+            result = Functions.gammaDouble(y);
         } else if (op instanceof Sqrt) {
-            result = Helpers.calculateSquareRoot(y); // Square root
+            result = Helpers.calculateSquareRoot(y);
         } else if (op instanceof Factorial) {
-            result = Helpers.factorial((int) y); // Factorial
+            result = Helpers.factorial((int) y);
         }
 
         stackdouble.push(result);
@@ -311,6 +329,26 @@ class Sqrt extends UnaryOperator {
 
 class Factorial extends UnaryOperator {
     public Factorial() {
+        rank = 3;
+    }
+}
+class Sin extends UnaryOperator {
+    public Sin() {
+        rank = 3; // Set appropriate rank
+    }
+}
+class Cos extends UnaryOperator {
+    public Cos() {
+        rank = 3; // Set appropriate rank
+    }
+}
+class Tan extends UnaryOperator {
+    public Tan() {
+        rank = 3;
+    }
+}
+class Ln extends UnaryOperator {
+    public Ln() {
         rank = 3;
     }
 }
