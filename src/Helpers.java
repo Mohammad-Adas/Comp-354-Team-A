@@ -69,8 +69,8 @@ public class Helpers {
 
     //Find the gcd
     public static int gcd(int a, int b) {
-        int largest = Math.max(a, b);
-        int smallest = Math.min(a, b);
+        int largest = max(a, b);
+        int smallest = min(a, b);
         int quotitent;
         int remainder;
         int prevNum = 1;
@@ -89,10 +89,6 @@ public class Helpers {
         }
         return prevNum;
     }
-
-
-
-	
 
     //Newton Method to find nth root
     public static double decimalPower(double base, double exponent) {
@@ -119,7 +115,7 @@ public class Helpers {
 
             result *= (double) 1 / (double) nthRoot;
 
-            if (Math.abs(result - prev) < 0.00001) {
+            if (absoluteValue(result - prev) < 0.00001) {
                 break;
             }
 
@@ -131,6 +127,23 @@ public class Helpers {
         return result;
 
 
+    }
+
+     //Find min and max
+    public static int max(int a, int b) {
+        if (a < b) {
+            return b;
+        } else {
+            return a;
+        }
+    }
+
+    public static int min(int a, int b) {
+        if (a < b) {
+            return a;
+        } else {
+            return b;
+        }
     }
 
 	
