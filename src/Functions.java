@@ -31,18 +31,27 @@ public class Functions {
         return sum;
     }
 
-    //Function ab^x
-    public static double abx(double a , double b , double x) {
-        if((b<0)&&(x>0&&x<1)) {
+ //Function ab^x
+    public static double abx(double a, double b, double x) {
+        double result = 0;
+        if ((b < 0) && (x > 0 && x < 1)) {
             throw new IllegalArgumentException("Cannot sqrt a negative number");
-        }else if (((b)==0)&(x<0)){
-           throw new IllegalArgumentException("Cannot divide by zero");
-        }else if ((b==0)&&(x==0)){
+        } else if (((b) == 0) & (x < 0)) {
+            throw new IllegalArgumentException("Cannot divide by zero");
+        } else if ((b == 0) && (x == 0)) {
             throw new IllegalArgumentException("Undefined");
-        }else{
-            double result = Helpers.power(b,(int)x);
-            return result * a;
+        } else {
+            if (x > 0 && x < 1) {
+                result += Helpers.decimalPower(b, x);
+                //System.out.println("X is a decimal");
+                //System.out.println(result);
+            } else {
+                result += Helpers.power(b, (int) x);
+                //System.out.println("X is an int");
+            }
         }
+        result *= a;
+        return result;
     }
 
 
