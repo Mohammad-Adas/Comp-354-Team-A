@@ -54,6 +54,56 @@ public class Functions {
         return result;
     }
 
+     //Function 2^x
+    public static double BaseTwoExponential(double exp){
+
+        double result = 0;
+        if(exp<0){
+            exp = -exp;
+            if(exp > 0 && exp < 1 ){
+
+                result += 1/Helpers.decimalPower(2,exp);
+            }else{
+                result += 1/Helpers.power(2,exp);
+            }
+        }else{
+
+            if(exp > 0 && exp < 1 ){
+
+                result +=Helpers.decimalPower(2,exp);
+            }else{
+                result += Helpers.power(2,exp);
+            }
+        }
+        return result;
+
+    }
+
+    //Function 10^x
+    public static double BaseTenExponential(double exp){
+
+        double result = 0;
+        if(exp<0){
+            exp = -exp;
+            if(exp > 0 && exp < 1 ){
+
+                result += 1/Helpers.decimalPower(10,exp);
+            }else{
+                result += 1/Helpers.power(10,exp);
+            }
+        }else{
+
+            if(exp > 0 && exp < 1 ){
+
+                result +=Helpers.decimalPower(10,exp);
+            }else{
+                result += Helpers.power(10,exp);
+            }
+        }
+        return result;
+
+    }
+
 
     /* Mean Absolute Deviation (MAD) */
     public static double calculateMAD(Number[] dataset) {
