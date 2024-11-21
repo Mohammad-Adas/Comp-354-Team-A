@@ -67,6 +67,73 @@ public class Helpers {
         return result;
     }
 
+    //Find the gcd
+    public static int gcd(int a, int b) {
+        int largest = Math.max(a, b);
+        int smallest = Math.min(a, b);
+        int quotitent;
+        int remainder;
+        int prevNum = 1;
+        if (largest % smallest == 0) {
+            return smallest;
+        }
+        while (true) {
+            quotitent = largest / smallest;
+            remainder = largest % smallest;
+            if (remainder == 0) {
+                break;
+            }
+            largest = smallest;
+            smallest = remainder;
+            prevNum = remainder;
+        }
+        return prevNum;
+    }
+
+
+
+	
+
+    //Newton Method to find nth root
+    public static double decimalPower(double base, double exponent) {
+
+        //Converting to decimal
+        String str = Double.toString(exponent);
+        int index = str.indexOf('.');
+        int num = str.length() - 1;
+        int denominator = (int) Helpers.power(10, (num - index));
+        int numerator = Integer.parseInt(str.replace(".", ""));
+        int gcd = Helpers.gcd(numerator, denominator);
+        denominator = denominator / gcd;
+        numerator = numerator / gcd;
+
+        int nthRoot = denominator;
+        double result;
+        double prev = (int) (base / 2);
+
+        while (true) {
+
+            result = (nthRoot - 1) * prev;
+            result += (base / (Helpers.power(prev, nthRoot - 1)));
+
+
+            result *= (double) 1 / (double) nthRoot;
+
+            if (Math.abs(result - prev) < 0.00001) {
+                break;
+            }
+
+            prev = result;
+
+        }
+
+        result = Helpers.power(result, numerator);
+        return result;
+
+
+    }
+
+	
     /*
     Natural Logarithm function
      */
