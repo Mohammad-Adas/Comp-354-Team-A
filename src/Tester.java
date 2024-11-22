@@ -13,7 +13,7 @@ public class Tester implements ActionListener {
     JButton decButton, equButton, delButton, clrButton;
     JButton openParaButton, closeParaButton, powerButton, factorialButton;
     JButton sinButton, cosButton, tanButton, lnButton, sqrtButton, expButton;
-    JButton arccosButton, abxButton, madButton, gammaButton, sinhButton;
+    JButton arccosButton, abxButton, madButton, gammaButton, sinhButton, stdDevButton;
     JButton historyButton, clearHistoryButton;
 
     JPanel panel;
@@ -62,6 +62,7 @@ public class Tester implements ActionListener {
         madButton = new JButton("mad");
         gammaButton = new JButton("gamma");
         sinhButton = new JButton("sinh");
+        stdDevButton = new JButton("stdDev");
         historyButton = new JButton("History");
         clearHistoryButton = new JButton("Clear History");
 
@@ -88,9 +89,10 @@ public class Tester implements ActionListener {
         functionButtons[20] = madButton;
         functionButtons[21] = gammaButton;
         functionButtons[22] = sinhButton;
-        functionButtons[23] = historyButton;
-        functionButtons[24] = clearHistoryButton;
-
+        functionButtons[23] = stdDevButton;
+        functionButtons[24] = historyButton;
+        functionButtons[25] = clearHistoryButton;
+        
         for (int i = 0; i < functionButtons.length; i++) {
             if (functionButtons[i] != null) {
                 functionButtons[i].addActionListener(this);
@@ -144,6 +146,7 @@ public class Tester implements ActionListener {
         panel.add(madButton);
         panel.add(gammaButton);
         panel.add(sinhButton);
+        panel.add(stdDevButton);
         panel.add(historyButton);
         panel.add(clearHistoryButton);
 
@@ -255,6 +258,10 @@ public class Tester implements ActionListener {
         }
         if (e.getSource() == sinhButton) {
             textfield.setText(textfield.getText().concat("sinh("));
+        }
+        if (e.getSource() == stdDevButton) {
+            textfield.setText(textfield.getText().concat("stddev("));
+            // going to add my testing logic here to input and array of Numbers or to use a sample array for testing purposes
         }
         if (e.getSource() == historyButton) {
             String[] history = calcHistory.retrieveHistory();
