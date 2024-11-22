@@ -122,7 +122,7 @@ public class BackEndCalculator {
         } else if (op instanceof Abx) {
             result = Functions.abx(x, y, stackdouble.pop());
         } else if (op instanceof Mad) {
-            Number[] dataset = retrieveDataset();
+            Number[] dataset = retrieveDataset();a
             result = Functions.calculateMAD(dataset);
         } else if (op instanceof StdDev) {
             double[] dataset = {};
