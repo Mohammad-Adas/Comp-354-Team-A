@@ -17,7 +17,8 @@ public class Tester implements ActionListener {
     JButton increaseDecimalsButton, decreaseDecimalsButton; // New buttons
 
     JPanel panel;
-    Font myFont = new Font("Ink Free", Font.BOLD, 20);
+    JPanel panelUP;
+    Font myFont = new Font(null, Font.BOLD, 20);
 
     private int decimalPlaces = 2; // Track the number of decimal places
     private CalculationHistory calcHistory = new CalculationHistory();
@@ -32,6 +33,8 @@ public class Tester implements ActionListener {
         textfield.setBounds(50, 25, 400, 50);
         textfield.setFont(myFont);
 
+
+
         // Initialize history area
         historyArea = new JTextArea();
         historyArea.setBounds(460, 100, 200, 550); // Adjust dimensions
@@ -39,6 +42,7 @@ public class Tester implements ActionListener {
         historyArea.setEditable(false);
         historyArea.setLineWrap(true);
         historyArea.setWrapStyleWord(true);
+
 
         addButton = new JButton("+");
         subButton = new JButton("-");
@@ -113,6 +117,9 @@ public class Tester implements ActionListener {
 
         delButton.setBounds(50, 650, 190, 50);
         clrButton.setBounds(260, 650, 190, 50);
+        equButton.setBounds(50, 650, 400, 50);
+        equButton.setFont(new Font(null, Font.BOLD, 35));
+        equButton.setForeground(Color.BLUE);
 
         panel = new JPanel();
         panel.setBounds(50, 100, 400, 550);
@@ -141,7 +148,10 @@ public class Tester implements ActionListener {
 
         panel.add(decButton);
         panel.add(numberButtons[0]);
-        panel.add(equButton);
+
+        panel.add(new JPanel());
+
+
         panel.add(divButton);
         panel.add(lnButton);
 
@@ -161,10 +171,19 @@ public class Tester implements ActionListener {
         panel.add(increaseDecimalsButton);
         panel.add(decreaseDecimalsButton);
 
+
+        panelUP = new JPanel();
+        panelUP.setBounds(450, 25, 200, 50);
+        panelUP.setLayout(new GridLayout(1, 3, 10, 10));
+        panelUP.add(delButton);
+        panelUP.add(clrButton);
+
         frame.add(panel);
-        frame.add(delButton);
-        frame.add(clrButton);
+        frame.add(panelUP);
         frame.add(textfield);
+
+        frame.add(equButton);
+
         frame.add(historyArea); // Add the history area
         frame.setVisible(true);
 
