@@ -224,6 +224,31 @@ public class Tester implements ActionListener {
         }
         if (e.getSource() == madButton) {
             textfield.setText(textfield.getText().concat("mad("));
+            String input = JOptionPane.showInputDialog(frame, "Enter numbers separated by commas:");
+            if (input != null && !input.trim().isEmpty()) {
+                try {
+                    // Split the input into an array of strings and convert to a double array
+                    String[] inputArray = input.split(",");
+                    Number[] data = new Number[inputArray.length];
+
+                    for (int i = 0; i < inputArray.length; i++) {
+                        data[i] = Double.parseDouble(inputArray[i].trim());  // Convert string to double
+                    }
+
+                    // Calculate MAD
+                    double mad = Functions.calculateMAD(data);
+
+                    // Display the result
+                    textfield.setText(String.valueOf(mad));
+
+                    // Optionally add the result to history
+                    calcHistory.addHistory("MAD(" + input + ") = " + mad);
+                    updateHistoryArea();
+                } catch (NumberFormatException ex) {
+                    textfield.setText("Invalid input");
+                    JOptionPane.showMessageDialog(frame, "Invalid input. Please enter valid numbers.");
+                }
+            }
         }
         if (e.getSource() == gammaButton) {
             textfield.setText(textfield.getText().concat("gamma("));
