@@ -23,7 +23,7 @@ public class Tester implements ActionListener {
     Tester() {
         frame = new JFrame("Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 750); // Adjusted to fit history area
+        frame.setSize(800, 750); // Adjusted to fit history area
         frame.setLayout(null);
 
         textfield = new JTextField();
@@ -32,7 +32,7 @@ public class Tester implements ActionListener {
 
         // Initialize history area
         historyArea = new JTextArea();
-        historyArea.setBounds(460, 100, 200, 550); // Adjust dimensions
+        historyArea.setBounds(480, 100, 300, 550); // Adjust dimensions
         historyArea.setFont(new Font("Ink Free", Font.PLAIN, 15));
         historyArea.setEditable(false);
         historyArea.setLineWrap(true);
@@ -111,47 +111,56 @@ public class Tester implements ActionListener {
         clrButton.setBounds(260, 650, 190, 50);
 
         panel = new JPanel();
-        panel.setBounds(50, 100, 400, 550);
+        panel.setBounds(50, 100, 500, 550);
         panel.setLayout(new GridLayout(8, 4, 10, 10));
 
         panel.add(numberButtons[1]);
         panel.add(numberButtons[2]);
         panel.add(numberButtons[3]);
         panel.add(addButton);
+        panel.add(powerButton);
+
         panel.add(numberButtons[4]);
         panel.add(numberButtons[5]);
         panel.add(numberButtons[6]);
         panel.add(subButton);
+        panel.add(factorialButton);
+
+
         panel.add(numberButtons[7]);
         panel.add(numberButtons[8]);
         panel.add(numberButtons[9]);
         panel.add(mulButton);
+        panel.add(sqrtButton);
+
         panel.add(decButton);
         panel.add(numberButtons[0]);
         panel.add(equButton);
         panel.add(divButton);
+        panel.add(lnButton);
+
+
         panel.add(openParaButton);
         panel.add(closeParaButton);
-        panel.add(powerButton);
-        panel.add(factorialButton);
         panel.add(sinButton);
         panel.add(cosButton);
         panel.add(tanButton);
-        panel.add(lnButton);
-        panel.add(sqrtButton);
+
         panel.add(expButton);
-        panel.add(arccosButton);
         panel.add(abxButton);
         panel.add(madButton);
-        panel.add(gammaButton);
         panel.add(sinhButton);
+        panel.add(arccosButton);
+
+        panel.add(gammaButton);
         panel.add(stdDevButton);
         panel.add(historyButton);
         panel.add(clearHistoryButton);
 
-        frame.add(panel);
+
         frame.add(delButton);
         frame.add(clrButton);
+        frame.add(panel);
         frame.add(textfield);
         frame.add(historyArea); // Add the history area
         frame.setVisible(true);
