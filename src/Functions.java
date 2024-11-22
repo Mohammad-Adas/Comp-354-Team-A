@@ -150,30 +150,25 @@ public static double calculatePower(double number, int power) {
     /* Gamma Function */
     // Gamma function for integer inputs
 
-      public static double gammaDouble(double z) {
+        public static double gammaDouble(double z) {
         if (z < 0.5) {
-            // Using Helpers.sin and Helpers.pi directly
-            return pi() / (Helpers.sin(pi() * z) * gammaDouble(1 - z)); // Reflection formula
+            // Reflection formula for Gamma function
+            return pi() / (Helpers.sin(pi() * z) * gammaDouble(1 - z));
         } else {
+            // Lanczos approximation for Gamma function
             z -= 1;
             double[] p = {
-                676.5203681218851, -1259.1392167224028, 771.32342877765313,
-                -176.61502916214059, 12.507343278686905, -0.13857109526572012,
-                9.9843695780195716e-6, 1.5056327351493116e-7
+                    676.5203681218851, -1259.1392167224028, 771.32342877765313,
+                    -176.61502916214059, 12.507343278686905, -0.13857109526572012,
+                    9.9843695780195716e-6, 1.5056327351493116e-7
             };
             double x = 0.99999999999980993;
             for (int i = 0; i < p.length; i++) {
                 x += p[i] / (z + i + 1);
             }
             double t = z + p.length - 0.5;
-            // Using Helpers.sqrt, Helpers.power, and Helpers.naturalExponential directly
-            return Helpers.calculateSquareRoot(2 * pi()) * Helpers.power(t, z + 0.5) * Helpers.naturalExponential(-t) * x;
+            return Helpers.sqrt(2 * pi()) * Helpers.pow(t, z + 0.5) * Helpers.exp(-t) * x;
         }
-    }
-
-    // Method to return the value of Pi
-    public static double pi() {
-        return 3.141592653589793;
     }
 
     // Hyperbolic sine function using exponential logic
