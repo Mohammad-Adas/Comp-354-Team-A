@@ -248,7 +248,7 @@ public class Tester implements ActionListener {
         }
         if (e.getSource() == abxButton) {
             textfield.setText(textfield.getText().concat("abx("));
-            String input = JOptionPane.showInputDialog(frame, "Enter numbers separated by commas:");
+            String input = JOptionPane.showInputDialog(frame, "Enter a, b, x separated by commas:");
             if (input != null && !input.trim().isEmpty()) {
                 try {
                     // Split the input into an array of strings and convert to a double array
