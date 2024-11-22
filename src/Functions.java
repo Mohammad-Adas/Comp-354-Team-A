@@ -111,10 +111,10 @@ public static double calculatePower(double number, int power) {
     /* Gamma Function */
     // Gamma function for integer inputs
 
-        public static double gammaDouble(double z) {
+     public static double gammaDouble(double z) {
         if (z < 0.5) {
             // Reflection formula for Gamma function
-            return pi() / (Helpers.sin(pi() * z) * gammaDouble(1 - z));
+            return pi() / ((Helpers.sin(pi() * z)) * gammaDouble(1 - z));
         } else {
             // Lanczos approximation for Gamma function
             z -= 1;
@@ -128,7 +128,7 @@ public static double calculatePower(double number, int power) {
                 x += p[i] / (z + i + 1);
             }
             double t = z + p.length - 0.5;
-            return Helpers.calculateSquareRoot(2 * pi()) * Helpers.power(t, z + 0.5) * Helpers.naturalExponential(-t) * x;
+            return Helpers.calculateSquareRoot(2 * pi()) * Helpers.decimalPower(t, z + 0.5) * Helpers.naturalExponential(-t) * x;
         }
     }
      // Pi constant
