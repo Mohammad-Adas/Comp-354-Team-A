@@ -247,8 +247,32 @@ public class Tester implements ActionListener {
             textfield.setText(textfield.getText().concat("arccos("));
         }
         if (e.getSource() == abxButton) {
-
             textfield.setText(textfield.getText().concat("abx("));
+            String input = JOptionPane.showInputDialog(frame, "Enter numbers separated by commas:");
+            if (input != null && !input.trim().isEmpty()) {
+                try {
+                    // Split the input into an array of strings and convert to a double array
+                    String[] inputArray = input.split(",");
+                    Number[] data = new Number[inputArray.length];
+
+                    for (int i = 0; i < inputArray.length; i++) {
+                        data[i] = Double.parseDouble(inputArray[i].trim());  // Convert string to double
+                    }
+
+                    // Calculate Abx
+                    double abx = Functions.abx((double)data[0],(double)data[1],(double)data[2]);
+
+                    // Display the result
+                    textfield.setText(String.valueOf(abx));
+
+                    // Optionally add the result to history
+                    calcHistory.addHistory("ABX(" + input + ") = " + abx);
+                    updateHistoryArea();
+                } catch (NumberFormatException ex) {
+                    textfield.setText("Invalid input");
+                    JOptionPane.showMessageDialog(frame, "Invalid input. Please enter valid numbers.");
+                }
+            }
         }
         if (e.getSource() == madButton) {
             textfield.setText(textfield.getText().concat("mad("));
