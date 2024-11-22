@@ -268,15 +268,28 @@ public class Tester implements ActionListener {
             textfield.setText(textfield.getText().concat("sinh("));
         }
         if (e.getSource() == stdDevButton) {
-            textfield.setText(textfield.getText().concat("sd(15.2, 13.1, 17.1, 17.0, 3.0)   (test data)"));
-            double[] testData = {15.2, 13.1, 17.1, 17.0, 3.0};
+            textfield.setText(textfield.getText().concat("sd("));
+            String input = JOptionPane.showInputDialog(frame, "enter numbers separated by commas : ");
+            if (input != null && !input.trim().isEmpty()) {
+                try {
+                    String[] inputArray = input.split(",");
+                    double[] data = new double[inputArray.length];
 
-            double result = Functions.calculateStandardDeviation(testData);
-            textfield.setText(String.valueOf(result));
+                    for (int i = 0; i < inputArray.length; i++) {
+                        data[i] = Double.parseDouble(inputArray[i].trim());
+                    }
 
-            calcHistory.addHistory("sd = " + result);
+                    double sd = Functions.calculateStandardDeviation(data);
 
-            updateHistoryArea();
+                    textfield.setText(String.valueOf(sd));
+
+                    calcHistory.addHistory("sd(" + input + ") = " + sd);
+                    updateHistoryArea();
+                } catch (NumberFormatException ex) {
+                    textfield.setText("invalid input !");
+                    JOptionPane.showMessageDialog(frame, "invalid input. please enter valid numbers !");
+                }
+            }
         }
         if (e.getSource() == historyButton) {
             String[] history = calcHistory.retrieveHistory();
