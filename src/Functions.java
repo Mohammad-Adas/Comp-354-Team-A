@@ -189,15 +189,15 @@ public static double calculatePower(double number, int power) {
 
         // calculate mean
         double sum = 0.0;
-        for (double num : data) {
-            sum += num;
+        for (Number num : data) {
+            sum += (Double) num;
         }
         double mean = sum / data.length;
 
         // calculate variance
         double varianceSum = 0.0;
-        for (double num : data) {
-            varianceSum += Helpers.power(num - mean, 2);
+        for (Number num : data) {
+            varianceSum += Helpers.power((Double) num - mean, 2);
         }
         double variance = varianceSum / data.length;
 
