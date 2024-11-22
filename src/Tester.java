@@ -7,12 +7,12 @@ public class Tester implements ActionListener {
     JTextField textfield;
     JTextArea historyArea; // Text area for history
     JButton[] numberButtons = new JButton[10];
-    JButton[] functionButtons = new JButton[26];
+    JButton[] functionButtons = new JButton[27];
     JButton addButton, subButton, mulButton, divButton;
     JButton decButton, equButton, delButton, clrButton;
     JButton openParaButton, closeParaButton, powerButton, factorialButton;
     JButton sinButton, cosButton, tanButton, lnButton, sqrtButton, expButton;
-    JButton arccosButton, abxButton, madButton, gammaButton, sinhButton;
+    JButton arccosButton, abxButton, madButton, gammaButton, sinhButton,sdButton;
     JButton historyButton, clearHistoryButton;
     JButton increaseDecimalsButton, decreaseDecimalsButton; // New buttons
 
@@ -24,9 +24,9 @@ public class Tester implements ActionListener {
     private CalculationHistory calcHistory = new CalculationHistory();
 
     Tester() {
-        frame = new JFrame("Calculator");
+        frame = new JFrame(" Eternity Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 750); // Adjusted to fit history area
+        frame.setSize(900, 750); // Adjusted to fit history area
         frame.setLayout(null);
 
         textfield = new JTextField();
@@ -37,12 +37,12 @@ public class Tester implements ActionListener {
 
         // Initialize history area
         historyArea = new JTextArea();
-        historyArea.setBounds(460, 100, 200, 550); // Adjust dimensions
+        historyArea.setBounds(660, 100, 200, 550); // Adjust dimensions
         historyArea.setFont(new Font("Ink Free", Font.PLAIN, 15));
         historyArea.setEditable(false);
         historyArea.setLineWrap(true);
         historyArea.setWrapStyleWord(true);
-
+        sdButton = new JButton("SD");
 
         addButton = new JButton("+");
         subButton = new JButton("-");
@@ -99,6 +99,8 @@ public class Tester implements ActionListener {
         functionButtons[22] = sinhButton;
         functionButtons[23] = historyButton;
         functionButtons[24] = clearHistoryButton;
+        functionButtons[25] = sdButton;
+
 
         for (int i = 0; i < functionButtons.length; i++) {
             if (functionButtons[i] != null) {
@@ -122,7 +124,7 @@ public class Tester implements ActionListener {
         equButton.setForeground(Color.BLUE);
 
         panel = new JPanel();
-        panel.setBounds(50, 100, 400, 550);
+        panel.setBounds(50, 100, 600, 550);
         panel.setLayout(new GridLayout(8, 4, 10, 10));
 
         panel.add(numberButtons[1]);
@@ -149,7 +151,8 @@ public class Tester implements ActionListener {
         panel.add(decButton);
         panel.add(numberButtons[0]);
 
-        panel.add(new JPanel());
+        panel.add(sdButton);
+
 
 
         panel.add(divButton);
@@ -170,7 +173,6 @@ public class Tester implements ActionListener {
         panel.add(clearHistoryButton);
         panel.add(increaseDecimalsButton);
         panel.add(decreaseDecimalsButton);
-
 
         panelUP = new JPanel();
         panelUP.setBounds(450, 25, 200, 50);
@@ -243,7 +245,30 @@ public class Tester implements ActionListener {
         }
         if (e.getSource() == factorialButton) {
             textfield.setText(textfield.getText().concat("!"));
+        } if (e.getSource() == sdButton) {
+
+            textfield.setText(textfield.getText().concat("sd("));
+            String input = JOptionPane.showInputDialog(frame, "enter numbers separated by commas : ");
+            if (input != null && !input.trim().isEmpty()) {
+                try {
+                    String[] inputArray = input.split(",");
+                    double[] data = new double[inputArray.length];
+                    for (int i = 0; i < inputArray.length; i++) {
+                        data[i] = Double.parseDouble(inputArray[i].trim());
+                    }
+            double sd = Functions.calculateStandardDeviation(data);
+
+            textfield.setText(String.valueOf(sd));
+
+            calcHistory.addHistory("sd(" + input + ") = " + sd);
+            updateHistoryArea();
+        } catch (NumberFormatException ex) {
+            textfield.setText("invalid input !");
+            JOptionPane.showMessageDialog(frame, "invalid input. please enter valid numbers !");
         }
+    }
+}
+
         if (e.getSource() == sinButton) {
             textfield.setText(textfield.getText().concat("sin("));
         }
