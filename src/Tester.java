@@ -1,6 +1,6 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
 public class Tester implements ActionListener {
     JFrame frame;
@@ -12,18 +12,20 @@ public class Tester implements ActionListener {
     JButton decButton, equButton, delButton, clrButton;
     JButton openParaButton, closeParaButton, powerButton, factorialButton;
     JButton sinButton, cosButton, tanButton, lnButton, sqrtButton, expButton;
-    JButton arccosButton, abxButton, madButton, gammaButton, sinhButton, stdDevButton;
+    JButton arccosButton, abxButton, madButton, gammaButton, sinhButton;
     JButton historyButton, clearHistoryButton;
+    JButton increaseDecimalsButton, decreaseDecimalsButton; // New buttons
 
     JPanel panel;
     Font myFont = new Font("Ink Free", Font.BOLD, 20);
 
+    private int decimalPlaces = 2; // Track the number of decimal places
     private CalculationHistory calcHistory = new CalculationHistory();
 
     Tester() {
         frame = new JFrame("Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 750); // Adjusted to fit history area
+        frame.setSize(700, 750); // Adjusted to fit history area
         frame.setLayout(null);
 
         textfield = new JTextField();
@@ -32,7 +34,7 @@ public class Tester implements ActionListener {
 
         // Initialize history area
         historyArea = new JTextArea();
-        historyArea.setBounds(480, 100, 300, 550); // Adjust dimensions
+        historyArea.setBounds(460, 100, 200, 550); // Adjust dimensions
         historyArea.setFont(new Font("Ink Free", Font.PLAIN, 15));
         historyArea.setEditable(false);
         historyArea.setLineWrap(true);
@@ -61,9 +63,12 @@ public class Tester implements ActionListener {
         madButton = new JButton("mad");
         gammaButton = new JButton("gamma");
         sinhButton = new JButton("sinh");
-        stdDevButton = new JButton("sd");
         historyButton = new JButton("History");
         clearHistoryButton = new JButton("Clear History");
+
+        // New buttons for controlling decimals
+        increaseDecimalsButton = new JButton("+.0");
+        decreaseDecimalsButton = new JButton("-.0");
 
         functionButtons[0] = addButton;
         functionButtons[1] = subButton;
@@ -88,10 +93,9 @@ public class Tester implements ActionListener {
         functionButtons[20] = madButton;
         functionButtons[21] = gammaButton;
         functionButtons[22] = sinhButton;
-        functionButtons[23] = stdDevButton;
-        functionButtons[24] = historyButton;
-        functionButtons[25] = clearHistoryButton;
-        
+        functionButtons[23] = historyButton;
+        functionButtons[24] = clearHistoryButton;
+
         for (int i = 0; i < functionButtons.length; i++) {
             if (functionButtons[i] != null) {
                 functionButtons[i].addActionListener(this);
@@ -111,7 +115,7 @@ public class Tester implements ActionListener {
         clrButton.setBounds(260, 650, 190, 50);
 
         panel = new JPanel();
-        panel.setBounds(50, 100, 500, 550);
+        panel.setBounds(50, 100, 400, 550);
         panel.setLayout(new GridLayout(8, 4, 10, 10));
 
         panel.add(numberButtons[1]);
@@ -124,6 +128,7 @@ public class Tester implements ActionListener {
         panel.add(numberButtons[5]);
         panel.add(numberButtons[6]);
         panel.add(subButton);
+
         panel.add(factorialButton);
 
 
@@ -131,6 +136,7 @@ public class Tester implements ActionListener {
         panel.add(numberButtons[8]);
         panel.add(numberButtons[9]);
         panel.add(mulButton);
+
         panel.add(sqrtButton);
 
         panel.add(decButton);
@@ -139,31 +145,41 @@ public class Tester implements ActionListener {
         panel.add(divButton);
         panel.add(lnButton);
 
-
         panel.add(openParaButton);
         panel.add(closeParaButton);
         panel.add(sinButton);
         panel.add(cosButton);
         panel.add(tanButton);
-
         panel.add(expButton);
+        panel.add(arccosButton);
         panel.add(abxButton);
         panel.add(madButton);
-        panel.add(sinhButton);
-        panel.add(arccosButton);
-
         panel.add(gammaButton);
-        panel.add(stdDevButton);
+        panel.add(sinhButton);
         panel.add(historyButton);
         panel.add(clearHistoryButton);
+        panel.add(increaseDecimalsButton);
+        panel.add(decreaseDecimalsButton);
 
-
+        frame.add(panel);
         frame.add(delButton);
         frame.add(clrButton);
-        frame.add(panel);
         frame.add(textfield);
         frame.add(historyArea); // Add the history area
         frame.setVisible(true);
+
+        // Add listeners for new buttons
+        increaseDecimalsButton.addActionListener(this);
+        decreaseDecimalsButton.addActionListener(this);
+    }
+
+    private String formatNumber(double number) {
+        StringBuilder pattern = new StringBuilder("#.");
+        for (int i = 0; i < decimalPlaces; i++) {
+            pattern.append("#");
+        }
+        java.text.DecimalFormat df = new java.text.DecimalFormat(pattern.toString());
+        return df.format(number);
     }
 
     @Override
@@ -231,6 +247,7 @@ public class Tester implements ActionListener {
             textfield.setText(textfield.getText().concat("arccos("));
         }
         if (e.getSource() == abxButton) {
+
             textfield.setText(textfield.getText().concat("abx("));
         }
         if (e.getSource() == madButton) {
@@ -267,30 +284,6 @@ public class Tester implements ActionListener {
         if (e.getSource() == sinhButton) {
             textfield.setText(textfield.getText().concat("sinh("));
         }
-        if (e.getSource() == stdDevButton) {
-            textfield.setText(textfield.getText().concat("sd("));
-            String input = JOptionPane.showInputDialog(frame, "enter numbers separated by commas : ");
-            if (input != null && !input.trim().isEmpty()) {
-                try {
-                    String[] inputArray = input.split(",");
-                    double[] data = new double[inputArray.length];
-
-                    for (int i = 0; i < inputArray.length; i++) {
-                        data[i] = Double.parseDouble(inputArray[i].trim());
-                    }
-
-                    double sd = Functions.calculateStandardDeviation(data);
-
-                    textfield.setText(String.valueOf(sd));
-
-                    calcHistory.addHistory("sd(" + input + ") = " + sd);
-                    updateHistoryArea();
-                } catch (NumberFormatException ex) {
-                    textfield.setText("invalid input !");
-                    JOptionPane.showMessageDialog(frame, "invalid input. please enter valid numbers !");
-                }
-            }
-        }
         if (e.getSource() == historyButton) {
             String[] history = calcHistory.retrieveHistory();
             JOptionPane.showMessageDialog(frame, "History:\n" + String.join("\n", history));
@@ -301,22 +294,40 @@ public class Tester implements ActionListener {
             JOptionPane.showMessageDialog(frame, "History cleared.");
         }
 
+        if (e.getSource() == increaseDecimalsButton) {
+            if(decimalPlaces<=4){
+            decimalPlaces++;
+            JOptionPane.showMessageDialog(frame, "Decimal places increased to: " + decimalPlaces);}
+            else {
+                JOptionPane.showMessageDialog(frame, "Decimal places reached the max :" + decimalPlaces);
+
+        }
+        }
+
+        if (e.getSource() == decreaseDecimalsButton) {
+            if (decimalPlaces > 0) {
+                decimalPlaces--;
+                JOptionPane.showMessageDialog(frame, "Decimal places decreased to: " + decimalPlaces);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Decimal places cannot be less than 0.");
+            }
+        }
+
         if (e.getSource() == equButton) {
             try {
                 String expression = textfield.getText();
                 String result = String.valueOf(BackEndCalculator.evaluate(expression));
-                textfield.setText(result);
+                double resultNumber = Double.parseDouble(result);
+                textfield.setText(formatNumber(resultNumber));
 
-                // Add to history
-                calcHistory.addHistory(expression + " = " + result);
-
-                // Update the history display
+                calcHistory.addHistory(expression + " = " + formatNumber(resultNumber));
                 updateHistoryArea();
             } catch (Exception ex) {
                 textfield.setText("Error");
             }
         }
     }
+
     private void updateHistoryArea() {
         String[] history = calcHistory.retrieveHistory();
         int start = Math.max(0, history.length - 5); // Get the last 5 calculations
@@ -328,7 +339,6 @@ public class Tester implements ActionListener {
     }
 
     public static void main(String[] args) {
-        Tester tester = new Tester();
+        new Tester();
     }
 }
-
