@@ -108,8 +108,8 @@ public class Functions {
     /* Mean Absolute Deviation (MAD) */
     public static double calculateMAD(Number[] dataset) {
         double sum = 0.0;
-        for (Number num : dataset) {
-            sum += num.doubleValue();  // Convert Number to double
+        for (Number numerator : dataset) {
+            sum += numerator.doubleValue();  // Convert Number to double
         }
 
         // Calculate mean
@@ -117,8 +117,8 @@ public class Functions {
 
         // Calculate the sum of absolute differences from the mean
         double madSum = 0.0;
-        for (Number num : dataset) {
-            madSum += Helpers.absoluteValue(num.doubleValue() - mean);
+        for (Number numerator : dataset) {
+            madSum += Helpers.absoluteValue(numerator.doubleValue() - mean);
         }
 
         // Return the Mean Absolute Deviation (MAD)
@@ -184,6 +184,23 @@ public static double calculatePower(double number, int power) {
         return (expX - expNegX) / 2;
     }
 
+    // Standard Deviation function (takes an array of doubles)
+    public static double standardDeviation(double[] data) {
 
+        // calculate mean
+        double sum = 0.0;
+        for (double num : data) {
+            sum += num;
+        }
+        double mean = sum / data.length;
 
+        // calculate variance
+        double varianceSum = 0.0;
+        for (double num : data) {
+            varianceSum += Helpers.power(num - mean, 2);
+        }
+        double variance = varianceSum / data.length;
+
+        return Helpers.calculateSquareRoot(variance);
+    }
 }
