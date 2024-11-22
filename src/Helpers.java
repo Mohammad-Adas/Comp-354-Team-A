@@ -19,7 +19,7 @@ public class Helpers {
     /* power function */
     public static double power(double base, double exponent) {
         double result = 1;
-        for (int i = 0; i < Math.abs(exponent); i++) {
+        for (int i = 0; i < absoluteValue(exponent); i++) {
             result *= base;
         }
         // If exponent is negative, take reciprocal of the result
@@ -57,7 +57,7 @@ public class Helpers {
         // using the Taylor series to approximate the power function
         double result = 1;
         double term = 1;
-        int n = 30; // calculating first 30 terms.. this could be changed to use some 'convergence precision' value instead..
+        int n = 100000; // calculating first 30 terms.. this could be changed to use some 'convergence precision' value instead..
 
         for (int i = 1; i <= n; i++) {
             term *= x / i;
@@ -258,8 +258,9 @@ public class Helpers {
         return sinValue / cosValue;
     }
     public static void main(String[] args) {
-        for(int i=0;i<20;i++){
-System.out.println(sin(i));
+        for(int i=0;i<100;i++){
+System.out.println(naturalExponential(i));
+System.out.println("---"+Math.exp(i) +("number:"+i));
 
         }
     }
