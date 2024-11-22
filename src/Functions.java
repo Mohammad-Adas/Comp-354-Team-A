@@ -41,17 +41,27 @@ public class Functions {
         } else if ((b == 0) && (x == 0)) {
             throw new IllegalArgumentException("Undefined");
         } else {
-            if (x > 0 && x < 1) {
-                result += Helpers.decimalPower(b, x);
-                //System.out.println("X is a decimal");
-                //System.out.println(result);
-            } else {
-                result += Helpers.power(b, (int) x);
-                //System.out.println("X is an int");
+              if(x<0){
+                x = -x;
+                if(x > 0 && x < 1 ){
+
+                    result += 1/Helpers.decimalPower(b,x);
+                }else{
+                    result += 1/Helpers.power(b,x);
+                }
+            }else{
+
+                if(x > 0 && x < 1 ){
+
+                    result +=Helpers.decimalPower(b,x);
+                }else{
+                    result += Helpers.power(b,x);
+                }
             }
         }
         result *= a;
         return result;
+        }
     }
 
      //Function 2^x
