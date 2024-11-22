@@ -167,7 +167,7 @@ public static double calculatePower(double number, int power) {
                 x += p[i] / (z + i + 1);
             }
             double t = z + p.length - 0.5;
-            return Helpers.sqrt(2 * pi()) * Helpers.pow(t, z + 0.5) * Helpers.exp(-t) * x;
+            return Helpers.calculateSquareRoot(2 * pi()) * Helpers.pow(t, z + 0.5) * Helpers.exp(-t) * x;
         }
     }
 
