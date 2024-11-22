@@ -76,6 +76,9 @@ public class BackEndCalculator {
             case "mad":
                 stackOperators.push(new Mad());
                 break;
+            case "stddev":
+                stackOperators.push(new StdDev());
+                break;
             case "gamma":
                 stackOperators.push(new Gamma());
                 break;
@@ -121,6 +124,9 @@ public class BackEndCalculator {
         } else if (op instanceof Mad) {
             Number[] dataset = retrieveDataset();
             result = Functions.calculateMAD(dataset);
+        } else if (op instanceof StdDev) {
+            Number[] dataset = retrieveDataset();
+            result = Functions.calculateStandardDeviation(dataset);
         } else if (op instanceof Gamma) {
             result = Functions.gammaDouble(y);
         } else if (op instanceof Sqrt) {
@@ -299,6 +305,12 @@ class Abx extends Operators {
 
 class Mad extends UnaryOperator {
     public Mad() {
+        rank = 3;
+    }
+}
+
+class StdDev extends UnaryOperator {
+    public StdDev() {
         rank = 3;
     }
 }

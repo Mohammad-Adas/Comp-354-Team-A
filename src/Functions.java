@@ -185,7 +185,7 @@ public static double calculatePower(double number, int power) {
     }
 
     // Standard Deviation function (takes an array of Numbers)
-    public static double standardDeviation(Number[] data) {
+    public static double calculateStandardDeviation(Number[] data) {
 
         // calculate mean
         double sum = 0.0;

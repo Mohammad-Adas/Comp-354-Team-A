@@ -62,7 +62,7 @@ public class Tester implements ActionListener {
         madButton = new JButton("mad");
         gammaButton = new JButton("gamma");
         sinhButton = new JButton("sinh");
-        stdDevButton = new JButton("stdDev");
+        stdDevButton = new JButton("stddev");
         historyButton = new JButton("History");
         clearHistoryButton = new JButton("Clear History");
 
