@@ -125,7 +125,7 @@ public class BackEndCalculator {
             Number[] dataset = retrieveDataset();
             result = Functions.calculateMAD(dataset);
         } else if (op instanceof StdDev) {
-            Number[] dataset = retrieveDataset();
+            double[] dataset = {};
             result = Functions.calculateStandardDeviation(dataset);
         } else if (op instanceof Gamma) {
             result = Functions.gammaDouble(y);

@@ -1,7 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import javax.swing.*;
 
 public class Tester implements ActionListener {
     JFrame frame;
@@ -62,7 +61,7 @@ public class Tester implements ActionListener {
         madButton = new JButton("mad");
         gammaButton = new JButton("gamma");
         sinhButton = new JButton("sinh");
-        stdDevButton = new JButton("stddev");
+        stdDevButton = new JButton("sd");
         historyButton = new JButton("History");
         clearHistoryButton = new JButton("Clear History");
 
@@ -260,8 +259,15 @@ public class Tester implements ActionListener {
             textfield.setText(textfield.getText().concat("sinh("));
         }
         if (e.getSource() == stdDevButton) {
-            textfield.setText(textfield.getText().concat("stddev("));
-            // going to add my testing logic here to input and array of Numbers or to use a sample array for testing purposes
+            textfield.setText(textfield.getText().concat("sd(15.2, 13.1, 17.1, 17.0, 3.0)   (test data)"));
+            double[] testData = {15.2, 13.1, 17.1, 17.0, 3.0};
+
+            double result = Functions.calculateStandardDeviation(testData);
+            textfield.setText(String.valueOf(result));
+
+            calcHistory.addHistory("sd = " + result);
+
+            updateHistoryArea();
         }
         if (e.getSource() == historyButton) {
             String[] history = calcHistory.retrieveHistory();

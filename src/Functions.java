@@ -185,19 +185,19 @@ public static double calculatePower(double number, int power) {
     }
 
     // Standard Deviation function (takes an array of Numbers)
-    public static double calculateStandardDeviation(Number[] data) {
+    public static double calculateStandardDeviation(double[] data) {
 
         // calculate mean
         double sum = 0.0;
-        for (Number num : data) {
-            sum += (Double) num;
+        for (double num : data) {
+            sum += num;
         }
         double mean = sum / data.length;
 
         // calculate variance
         double varianceSum = 0.0;
-        for (Number num : data) {
-            varianceSum += Helpers.power((Double) num - mean, 2);
+        for (double num : data) {
+            varianceSum += Helpers.power(num - mean, 2);
         }
         double variance = varianceSum / data.length;
 
